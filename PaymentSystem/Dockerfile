@@ -10,13 +10,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && rm -rf /var/lib/apt/lists/* \
 
-
-RUN apt-get install -y php-pear
-
-RUN pecl install raphf
-
-RUN pecl install pecl_http \
-    && docker-php-ext-enable http
+RUN docker-php-ext-enable http
 
 COPY apache-config.conf /etc/apache2/conf-available/apache-config.conf
 RUN a2enconf apache-config
