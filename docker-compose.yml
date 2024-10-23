@@ -3,18 +3,23 @@ version: '3'
 services:
   web:
     build:
-      context: ./PaymentSystem/
+      context: EnergyBilling/
     volumes:
-      - ../PaymentSystem/:/var/www/PaymentSystem
+      - ../EnergyBilling/:/var/www/EnergyBilling
     environment:
       - APP_ENV=dev
-    ports:
-      - "8080:80"
+    expose:
+      - "9001"
+    networks:
+      test:
+        ipv4_address: 10.18.0.3
     depends_on:
       - db
 
   db:
     image: mysql:8
+    volumes:
+      - ../mysql-docker:/var/lib/mysql
     environment:
       MYSQL_DATABASE: symfony
       MYSQL_USER: symfony
@@ -23,3 +28,26 @@ services:
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
+    networks:
+      test:
+        ipv4_address: 10.18.0.13
+
+  energybillingfront:
+    build:
+      context: EnergyBillingFront/
+    volumes:
+      - ../EnergyBillingFront/:/var/www/EnergyBillingFront
+    environment:
+      - APP_ENV=dev
+    expose:
+      - "9001"
+    networks:
+        test:
+          ipv4_address: 10.18.0.4
+
+networks:
+    test:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 10.18.0.0/16
