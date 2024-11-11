@@ -19,7 +19,7 @@ RUN docker-php-ext-install pdo pdo_mysql intl zip
 
 RUN a2enmod rewrite
 
-ENV APACHE_DOCUMENT_ROOT /var/www/EnergyBillingFront/public
+ENV APACHE_DOCUMENT_ROOT /var/www/TimeTracker/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
@@ -34,11 +34,11 @@ opcache.validate_timestamps=1" > /usr/local/etc/php/conf.d/opcache.ini
 COPY apache-config.conf /etc/apache2/conf-available/apache-config.conf
 RUN a2enconf apache-config
 
-WORKDIR /var/www/EnergyBillingFront
+WORKDIR /var/www/TimeTracker
 
 RUN groupadd -r raul && \
     useradd -r -g raul raul && \
-    chown -R raul:raul /var/www/EnergyBillingFront
+    chown -R raul:raul /var/www/TimeTracker
 
 EXPOSE 80
 

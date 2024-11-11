@@ -3,9 +3,9 @@ version: '3'
 services:
   web:
     build:
-      context: EnergyBilling/
+      context: TimeTracker/
     volumes:
-      - ../EnergyBilling/:/var/www/EnergyBilling
+      - ../TimeTracker/:/var/www/TimeTracker
     environment:
       - APP_ENV=dev
     expose:
@@ -15,6 +15,19 @@ services:
         ipv4_address: 10.18.0.3
     depends_on:
       - db
+
+  timetrackerapi:
+    build:
+      context: TimeTrackerApi/
+    volumes:
+      - ../TimeTrackerApi/:/var/www/TimeTrackerApi
+    environment:
+      - APP_ENV=dev
+    expose:
+      - "9001"
+    networks:
+      test:
+        ipv4_address: 10.18.0.4
 
   db:
     image: mysql:8
@@ -31,19 +44,6 @@ services:
     networks:
       test:
         ipv4_address: 10.18.0.13
-
-  energybillingfront:
-    build:
-      context: EnergyBillingFront/
-    volumes:
-      - ../EnergyBillingFront/:/var/www/EnergyBillingFront
-    environment:
-      - APP_ENV=dev
-    expose:
-      - "9001"
-    networks:
-        test:
-          ipv4_address: 10.18.0.4
 
 networks:
     test:
