@@ -3,9 +3,9 @@ version: '3'
 services:
   web:
     build:
-      context: TimeTracker/
+      context: restaurant-manager-web/
     volumes:
-      - ../TimeTracker/:/var/www/TimeTracker
+      - ../restaurant-manager-web/:/var/www/restaurant-manager-web
     environment:
       - APP_ENV=dev
     expose:
@@ -15,19 +15,6 @@ services:
         ipv4_address: 10.18.0.3
     depends_on:
       - db
-
-  timetrackerapi:
-    build:
-      context: TimeTrackerApi/
-    volumes:
-      - ../TimeTrackerApi/:/var/www/TimeTrackerApi
-    environment:
-      - APP_ENV=dev
-    expose:
-      - "9001"
-    networks:
-      test:
-        ipv4_address: 10.18.0.4
 
   db:
     image: mysql:8
