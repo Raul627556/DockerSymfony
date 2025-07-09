@@ -21,8 +21,8 @@ services:
     volumes:
       - ../mysql-docker:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: symfony
-      MYSQL_USER: symfony
+      MYSQL_DATABASE: hokkaido
+      MYSQL_USER: hokkaido
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: root
     command: --max_allowed_packet=64M
